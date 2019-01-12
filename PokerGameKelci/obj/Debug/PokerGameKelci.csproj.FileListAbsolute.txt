@@ -1,0 +1,7 @@
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\obj\Debug\PokerGameKelci.csprojAssemblyReference.cache
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\obj\Debug\PokerGameKelci.csproj.CoreCompileInputs.cache
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\bin\Debug\PokerGameKelci.exe.config
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\bin\Debug\PokerGameKelci.exe
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\bin\Debug\PokerGameKelci.pdb
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\obj\Debug\PokerGameKelci.exe
+D:\kelci\c sharp\PokerGameKelci\PokerGameKelci\obj\Debug\PokerGameKelci.pdb
