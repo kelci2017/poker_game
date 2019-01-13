@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokerGameKelci
 {
-    class Constants
+    public class Constants
     {
     public static int CARD_TYPE_HEART = 1;
     public static String STR_CARD_TYPE_HEART = "H";

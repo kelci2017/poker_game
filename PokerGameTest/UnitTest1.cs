@@ -26,7 +26,7 @@ namespace PokerGameTest
                     player.printMyCards();
                 }
             }
-
+            
             game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 12));
             game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 8));
             game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 13));
@@ -45,7 +45,7 @@ namespace PokerGameTest
             game.deal(0, new Card(Constants.CARD_TYPE_CLUB, 12));
             game.deal(0, new Card(Constants.CARD_TYPE_CLUB, 8));
 
-            game.outputWinner(players);
+            Assert.AreEqual(game.outputWinner(players), game.getPlayer(0));
         }
     }
 }

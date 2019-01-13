@@ -41,6 +41,7 @@ namespace PokerGameKelci
         public void printMyCards()
         {
             Console.WriteLine(player_name);
+            arrangeCardsByKind(cardList);
             foreach (Card card in cardList)
             {
                 Console.WriteLine(card.getCard_type_desc() + ":" + card.getNumber() + "   ");
@@ -52,15 +53,28 @@ namespace PokerGameKelci
             return this.cardList;
         }
 
+        public void setPlayerCards(List<Card> cards)
+        {
+            this.cardList = cards;
+  
+        }
         public List<Card> arrangeCardsByKind(List<Card> cards)
         {
-
-            return null;
+            cards.GroupBy(x => x.getCard_type())
+                .Select(x => new
+                {
+                    Cards = x.OrderByDescending(c => c.getNumber()),
+                     Count = x.Count(),
+                })
+                .OrderByDescending(x => x.Count)
+                .SelectMany(x => x.Cards);
+            return cards;
         }
 
         public List<Card> arrangeCardsByNum(List<Card> cards)
         {
-            return null;
+            //cards.Sort();
+            return cards;
         }
     }
 }

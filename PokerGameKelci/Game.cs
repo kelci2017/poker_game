@@ -116,6 +116,74 @@ namespace PokerGameKelci
 
         public Player comparePlayersCardsByKind(List<Player> players)
         {
+           // createPlayersDicByCardType(players);
+            Dictionary<int, List<int>> playerSahpesDic = new Dictionary<int, List<int>>();
+            for (int cardType=1; cardType < 7; cardType++)
+            {
+                List<int> playerCardTypeList = new List<int>();
+                foreach (Player player in players)
+                {
+                    int sum = 0;
+                    foreach (Card card in player.getPlayerCards())
+                    {
+                        if (card.getCard_type() == cardType)
+                        {
+                            sum++;
+                        }
+                    }
+                    playerCardTypeList.Add(sum);
+                    sum = 0;
+                }
+                playerSahpesDic[cardType] = playerCardTypeList;
+                playerCardTypeList = null;
+            }
+
+            List<Player> flushPlayers = new List<Player>();
+            List<Player> fourKindPlayers = new List<Player>();
+            List<Player> threeKindPlayers = new List<Player>();
+
+            for (int cardType = 1; cardType < 7; cardType++)
+            {
+                if (playerSahpesDic[cardType].Max() == cardCount)
+                {
+                    flushPlayers.Add(players.ElementAt(playerSahpesDic[cardType].FindIndex(a => a == playerSahpesDic[cardType].Max())));
+                }
+                else if (playerSahpesDic[cardType].Max() == 4)
+                {
+                    fourKindPlayers.Add(players.ElementAt(playerSahpesDic[cardType].FindIndex(a => a == playerSahpesDic[cardType].Max())));
+                }
+                else if (playerSahpesDic[cardType].Max() == 3)
+                {
+                    threeKindPlayers.Add(players.ElementAt(playerSahpesDic[cardType].FindIndex(a => a == playerSahpesDic[cardType].Max())));
+                }
+            }
+            Player flushWinner = getWinnerPlayer(flushPlayers);
+            Player fourKindWinner = getWinnerPlayer(fourKindPlayers);
+            Player threeKindWinner = getWinnerPlayer(threeKindPlayers);
+            if (flushWinner != null)
+            {
+                return flushWinner;
+            } else if (fourKindWinner != null) 
+            {
+                return fourKindWinner;
+            } else if (threeKindWinner != null)
+            {
+                return threeKindWinner;
+            }
+
+                return null;
+        }
+
+        private Player getWinnerPlayer(List<Player> players)
+        {
+            if (players.Count == 1)
+            {
+                return players.ElementAt(0);
+            }
+            else if (players.Count() > 1)
+            {
+                return comparePlayersCardsByNum(players);
+            }
             return null;
         }
 

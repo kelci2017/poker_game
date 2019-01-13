@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PokerGameKelci
 {
-    class Card
+    public class Card
     {
         /**
 	 * type of the Card(heart,spade,club,diamond,red king,black king)
