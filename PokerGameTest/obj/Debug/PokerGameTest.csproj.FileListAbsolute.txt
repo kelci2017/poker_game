@@ -1,0 +1,2 @@
+D:\kelci\c sharp\PokerGameKelci\PokerGameTest\obj\Debug\PokerGameTest.csprojAssemblyReference.cache
+D:\kelci\c sharp\PokerGameKelci\PokerGameTest\obj\Debug\PokerGameTest.csproj.CoreCompileInputs.cache

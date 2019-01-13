@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace PokerGameKelci
 {
-    class Player
+    public class Player
     {
         //name of the player
         private String player_name;
@@ -45,6 +45,22 @@ namespace PokerGameKelci
             {
                 Console.WriteLine(card.getCard_type_desc() + ":" + card.getNumber() + "   ");
             }
+        }
+
+        public List<Card> getPlayerCards()
+        {
+            return this.cardList;
+        }
+
+        public List<Card> arrangeCardsByKind(List<Card> cards)
+        {
+
+            return null;
+        }
+
+        public List<Card> arrangeCardsByNum(List<Card> cards)
+        {
+            return null;
         }
     }
 }

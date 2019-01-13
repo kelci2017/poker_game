@@ -12,8 +12,9 @@ namespace PokerGameKelci
         {
            Game game = new Game(5);
 
-            game.addPlayer(new Player("Jack"));
-            game.addPlayer(new Player("Tonny"));
+            game.addPlayer(new Player("Joe"));
+            game.addPlayer(new Player("Bob"));
+            game.addPlayer(new Player("Sally"));
 
             //create a card dealer
             Dealer dealer = new Dealer(game);
@@ -33,6 +34,10 @@ namespace PokerGameKelci
                     player.printMyCards();
                 }
             }
+
+            //output the winner
+            game.outputWinner(players);
+
             Console.ReadKey();
         }
     }
