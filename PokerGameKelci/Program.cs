@@ -25,8 +25,9 @@ namespace PokerGameKelci
             //deal cards
             dealer.deal();
 
-            //Print cards for each player
             List<Player> players = game.getAllPlayer();
+            
+            //Print cards for each player
             if (players != null)
             {
                 foreach (Player player in players)
@@ -36,8 +37,15 @@ namespace PokerGameKelci
             }
 
             //output the winner
-            game.outputWinner(players);
+            List<Player> winners = game.outputWinnerList(players);
 
+            String winnersName = "";
+            foreach (Player player in winners)
+            {
+                winnersName = winnersName + " " + player.getPlayerName(player);
+            }
+            Console.WriteLine("The winners are: " + winnersName);
+            
             Console.ReadKey();
         }
     }

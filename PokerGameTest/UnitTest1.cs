@@ -14,8 +14,8 @@ namespace PokerGameTest
             Game game = new Game(5);
 
             game.addPlayer(new Player("Joe"));
+            game.addPlayer(new Player("Jen"));
             game.addPlayer(new Player("Bob"));
-            game.addPlayer(new Player("Sally"));
 
             //Print cards for each player
             List<Player> players = game.getAllPlayer();
@@ -27,25 +27,28 @@ namespace PokerGameTest
                 }
             }
             
-            game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 12));
-            game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 8));
-            game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 13));
-            game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 7));
+            game.deal(0, new Card(Constants.CARD_TYPE_HEART, 2));
             game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 3));
+            game.deal(0, new Card(Constants.CARD_TYPE_CLUB, 4));
+            game.deal(0, new Card(Constants.CARD_TYPE_DIAMOND, 5));
+            game.deal(0, new Card(Constants.CARD_TYPE_HEART, 10));
 
-            game.deal(0, new Card(Constants.CARD_TYPE_SPADE, 1));
-            game.deal(0, new Card(Constants.CARD_TYPE_SPADE, 12));
-            game.deal(0, new Card(Constants.CARD_TYPE_SPADE, 8));
-            game.deal(0, new Card(Constants.CARD_TYPE_SPADE, 6));
-            game.deal(0, new Card(Constants.CARD_TYPE_SPADE, 4));
+            game.deal(1, new Card(Constants.CARD_TYPE_CLUB, 5));
+            game.deal(1, new Card(Constants.CARD_TYPE_DIAMOND, 7));
+            game.deal(1, new Card(Constants.CARD_TYPE_HEART, 8));
+            game.deal(1, new Card(Constants.CARD_TYPE_SPADE, 9));
+            game.deal(1, new Card(Constants.CARD_TYPE_DIAMOND, 12));
 
-            game.deal(0, new Card(Constants.CARD_TYPE_SPADE, 4));
-            game.deal(0, new Card(Constants.CARD_TYPE_HEART, 4));
-            game.deal(0, new Card(Constants.CARD_TYPE_HEART, 3));
-            game.deal(0, new Card(Constants.CARD_TYPE_CLUB, 12));
-            game.deal(0, new Card(Constants.CARD_TYPE_CLUB, 8));
+            game.deal(2, new Card(Constants.CARD_TYPE_CLUB, 2));
+            game.deal(2, new Card(Constants.CARD_TYPE_DIAMOND, 4));
+            game.deal(2, new Card(Constants.CARD_TYPE_SPADE, 5));
+            game.deal(2, new Card(Constants.CARD_TYPE_CLUB, 10));
+            game.deal(2, new Card(Constants.CARD_TYPE_HEART, 11));
 
-            Assert.AreEqual(game.outputWinner(players), game.getPlayer(0));
+            //output the winner
+            List<Player> winners = game.outputWinnerList(players);
+            Console.WriteLine("the winner from calculation is: " + winners[0].getPlayerName(winners[0]));
+            Assert.AreEqual(winners[0].getPlayerName(winners[0]), game.getPlayer(1).getPlayerName(game.getPlayer(1)));
         }
     }
 }

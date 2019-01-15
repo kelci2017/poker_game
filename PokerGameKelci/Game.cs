@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokerGameKelci
 {
@@ -14,7 +12,6 @@ namespace PokerGameKelci
         private int ARRANGE_BY_KIND = 0;
         private int ARRANGE_BY_NUM = 1;
 
-        //players ArrayList,they are disorder
         private List<Player> players = new List<Player>();
 
         public Game() { }
@@ -80,23 +77,170 @@ namespace PokerGameKelci
         {
             players.ElementAt(playerIndex).receiveCard(card);
         }
-
-        public Player outputWinner(List<Player> players)
+        /**
+         * output winner list
+         * @param players
+         */
+        public List<Player> outputWinnerList(List<Player> players)
         {
-            Player winner = null;
+            
+            List<Player> winnerList = new List<Player>();
+            List<Player> flushList = new List<Player>();
+            List<Player> fourKindList = new List<Player>();
+            List<Player> threeKindList =  new List<Player>();
 
             arrangePlayersCards(players, ARRANGE_BY_KIND);
-            winner = comparePlayersCardsByKind(players);
 
-            if (winner == null)
+            if (getFlushPlayers(players).Count > 0)
             {
-                arrangePlayersCards(players, ARRANGE_BY_NUM);
-                winner = comparePlayersCardsByNum(players);
+                flushList = getHighCardPlayers(flushList);
+                winnerList.AddRange(flushList);
+                return winnerList;
+            } else
+            {
+                List<Player> fourKindPlayerList = getSameKindPlayers(players, 4);
+                if (fourKindPlayerList.Count > 0)
+                {
+                    fourKindList = fourKindPlayerList;
+                    winnerList.AddRange(fourKindList);
+                } else
+                {
+                    List<Player> threeKindPlayerList = getSameKindPlayers(players, 3);
+                    if (threeKindPlayerList.Count > 0)
+                    {
+                        threeKindList = getHighCardPlayers(threeKindPlayerList);
+                        winnerList.AddRange(threeKindList);
+                    } else
+                    {
+                        arrangePlayersCards(players, ARRANGE_BY_NUM);
+                        return getWinnerListByNum(players);
+                    }
+                }
+                return winnerList;
             }
-            
-            return winner;
         }
+        /**
+         * get winner list by card number
+         * @param players
+         */
+        private List<Player> getWinnerListByNum (List<Player> players)
+        {
+            List<Player> pairList = new List<Player>();
 
+            //get the players with pairs
+            foreach (Player player in players)
+            {
+                for (int i=0; i<player.getPlayerCards().Count -1; i++)
+                {
+                    if (player.getPlayerCards().ElementAt(i).getNumber() == player.getPlayerCards().ElementAt(i+1).getNumber())
+                    {
+                        List<Card> pairCards = new List<Card>();
+                        pairCards.Add(player.getPlayerCards().ElementAt(i));
+                        pairCards.Add(player.getPlayerCards().ElementAt(i + 1));
+
+                        //only put the higher pair cards to the player
+                        player.setPlayerCards(pairCards);
+                        pairList.Add(player);
+                    }
+                    break;
+                }
+            }
+            //if no pair players, just get the high card player from initial players
+            if (pairList.Count == 0)
+            {
+                return getHighCardPlayers(players);
+            } else
+            {
+                //get the high card players within the pair players
+                return getHighCardPlayers(pairList);
+            }
+        }
+        /**
+        * get players with flush
+        * @param players
+        */
+        private List<Player> getFlushPlayers(List<Player>players)
+        {
+            List<Player> flushList = new List<Player>();
+            foreach (Player player in players)
+            {
+                if (player.getPlayerCards().ElementAt(0).getCard_type() == player.getPlayerCards().ElementAt(player.getPlayerCards().Count -1).getCard_type())
+                {
+                    Console.WriteLine(player.getPlayerName(player) + " " + player.getPlayerCards().ElementAt(0).getCard_type() + " " + player.getPlayerCards().ElementAt(player.getPlayerCards().Count - 1).getCard_type());
+                    flushList.Add(player);
+                }
+            }
+            return flushList;
+        }
+        /**
+        * get players with three kind and four kind
+        * @param players
+        */
+        private List<Player> getSameKindPlayers(List<Player> players, int kinds)
+        {
+            List<Player> sameKindList = new List<Player>();
+            foreach (Player player in players)
+            {
+                for (int i = 0; i < player.getPlayerCards().Count - kinds; i++)
+                {
+                    if (player.getPlayerCards().ElementAt(i).getCard_type() == player.getPlayerCards().ElementAt(i + kinds - 1).getCard_type())
+                    {
+                        List<Card> sameKindCards = new List<Card>();
+                        for (int j=0; j<kinds; j++)
+                        {
+                            sameKindCards.Add(player.getPlayerCards().ElementAt(i + j));
+                        }
+
+                        //only put the four kind cards to the player
+                        player.setPlayerCards(sameKindCards);
+                        //arrange the player's cards by accending so that the first card is the high card
+                        player.arrangeCardsByNum(sameKindCards);
+                        sameKindList.Add(player);
+                        break;
+                    }
+                    
+                }
+
+            }
+            return sameKindList;
+        }
+        /**
+        * get players with high card
+        * @param players
+        */
+        private List<Player> getHighCardPlayers (List<Player> players)
+        {
+            List<Player> highCardPlayerList = new List<Player>();
+            Player highCardPlayer = null;
+            if (players.Count == 1)
+            {
+                return players;
+            }
+            //find the player with high card
+            for (int i=0; i<players.Count - 1; i++)
+            {
+                highCardPlayer = players[i];
+                if (players[i + 1].getPlayerCards().ElementAt(0).getNumber() > highCardPlayer.getPlayerCards().ElementAt(0).getNumber()) {
+                    highCardPlayer = players[i + 1];
+                } 
+            }
+
+            //get other players who has the same high card with highcardplayer
+            foreach (Player player in players)
+            {
+                if (player.getPlayerCards().ElementAt(0) == highCardPlayer.getPlayerCards().ElementAt(0))
+                {
+                    highCardPlayerList.Add(player);
+                }
+            }
+
+            return highCardPlayerList;
+        }
+        /**
+        * arrange players cards by type or number
+        * @param players
+        * @para arrange_way
+        */
         public void arrangePlayersCards(List<Player> players, int arrange_way)
         {
             if (arrange_way == ARRANGE_BY_KIND)
@@ -114,84 +258,5 @@ namespace PokerGameKelci
             }
         }
 
-        public Player comparePlayersCardsByKind(List<Player> players)
-        {
-           // createPlayersDicByCardType(players);
-            Dictionary<int, List<int>> playerSahpesDic = new Dictionary<int, List<int>>();
-            for (int cardType=1; cardType < 7; cardType++)
-            {
-                List<int> playerCardTypeList = new List<int>();
-                foreach (Player player in players)
-                {
-                    int sum = 0;
-                    foreach (Card card in player.getPlayerCards())
-                    {
-                        if (card.getCard_type() == cardType)
-                        {
-                            sum++;
-                        }
-                    }
-                    playerCardTypeList.Add(sum);
-                    sum = 0;
-                }
-                playerSahpesDic[cardType] = playerCardTypeList;
-                playerCardTypeList = null;
-            }
-
-            List<Player> flushPlayers = new List<Player>();
-            List<Player> fourKindPlayers = new List<Player>();
-            List<Player> threeKindPlayers = new List<Player>();
-
-            for (int cardType = 1; cardType < 7; cardType++)
-            {
-                if (playerSahpesDic[cardType].Max() == cardCount)
-                {
-                    flushPlayers.Add(players.ElementAt(playerSahpesDic[cardType].FindIndex(a => a == playerSahpesDic[cardType].Max())));
-                }
-                else if (playerSahpesDic[cardType].Max() == 4)
-                {
-                    fourKindPlayers.Add(players.ElementAt(playerSahpesDic[cardType].FindIndex(a => a == playerSahpesDic[cardType].Max())));
-                }
-                else if (playerSahpesDic[cardType].Max() == 3)
-                {
-                    threeKindPlayers.Add(players.ElementAt(playerSahpesDic[cardType].FindIndex(a => a == playerSahpesDic[cardType].Max())));
-                }
-            }
-            Player flushWinner = getWinnerPlayer(flushPlayers);
-            Player fourKindWinner = getWinnerPlayer(fourKindPlayers);
-            Player threeKindWinner = getWinnerPlayer(threeKindPlayers);
-            if (flushWinner != null)
-            {
-                return flushWinner;
-            } else if (fourKindWinner != null) 
-            {
-                return fourKindWinner;
-            } else if (threeKindWinner != null)
-            {
-                return threeKindWinner;
-            }
-
-                return null;
-        }
-
-        private Player getWinnerPlayer(List<Player> players)
-        {
-            if (players.Count == 1)
-            {
-                return players.ElementAt(0);
-            }
-            else if (players.Count() > 1)
-            {
-                return comparePlayersCardsByNum(players);
-            }
-            return null;
-        }
-
-        public Player comparePlayersCardsByNum(List<Player> players)
-        {
-            return null;
-        }
-
     }
 }
-

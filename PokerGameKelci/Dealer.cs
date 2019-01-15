@@ -9,10 +9,7 @@ namespace PokerGameKelci
     class Dealer
     {
         private Game game;
-        /**
-         * Card list
-         * Why using LinkedList is for shuffling and cutting consideration.
-         */
+        
         private List<Card> cards = new List<Card>();
 
         public Dealer(Game game)

@@ -41,11 +41,15 @@ namespace PokerGameKelci
         public void printMyCards()
         {
             Console.WriteLine(player_name);
-            arrangeCardsByKind(cardList);
             foreach (Card card in cardList)
             {
                 Console.WriteLine(card.getCard_type_desc() + ":" + card.getNumber() + "   ");
             }
+        }
+
+        public String getPlayerName(Player player)
+        {
+            return player.player_name;
         }
 
         public List<Card> getPlayerCards()
@@ -58,22 +62,36 @@ namespace PokerGameKelci
             this.cardList = cards;
   
         }
-        public List<Card> arrangeCardsByKind(List<Card> cards)
+        //arrange player's cards by type
+        public List<Card> arrangeCardsByKind(List<Card> cards) 
         {
-            cards.GroupBy(x => x.getCard_type())
-                .Select(x => new
-                {
-                    Cards = x.OrderByDescending(c => c.getNumber()),
-                     Count = x.Count(),
-                })
-                .OrderByDescending(x => x.Count)
-                .SelectMany(x => x.Cards);
+            cards.Sort(
+                  delegate (Card p1, Card p2)
+                  {
+                    int compareType = p1.getCard_type().CompareTo(p2.getCard_type());
+                    if (compareType == 0)
+                    {
+                        return p2.getNumber().CompareTo(p1.getNumber());
+                    }
+                    return compareType;
+                  }
+                );
             return cards;
         }
-
+        //arrange player's cards by number
         public List<Card> arrangeCardsByNum(List<Card> cards)
         {
-            //cards.Sort();
+            cards.Sort(
+                  delegate (Card p1, Card p2)
+                  {
+                      int compareNumber = p2.getNumber().CompareTo(p1.getNumber());
+                      if (compareNumber == 0)
+                      {
+                          return p2.getCard_type().CompareTo(p1.getCard_type());
+                      }
+                      return compareNumber;
+                  }
+                );
             return cards;
         }
     }
