@@ -126,7 +126,7 @@ namespace PokerGameKelci
         private List<Player> getWinnerListByNum (List<Player> players)
         {
             List<Player> pairList = new List<Player>();
-
+            Dictionary<Player, List<Card>> playerPairCardsList = new Dictionary<Player, List<Card>>();
             //get the players with pairs
             foreach (Player player in players)
             {
@@ -138,7 +138,9 @@ namespace PokerGameKelci
                         pairCards.Add(player.getPlayerCards().ElementAt(i));
                         pairCards.Add(player.getPlayerCards().ElementAt(i + 1));
 
-                        //only put the higher pair cards to the player
+                        //only put the higher pair cards to the playe
+                        //before set the player card list, put the original player cardlist in the dictionary
+                        playerPairCardsList[player] = player.getPlayerCards();
                         player.setPlayerCards(pairCards);
                         pairList.Add(player);
                     }
@@ -151,6 +153,17 @@ namespace PokerGameKelci
                 return getHighCardPlayers(players);
             } else
             {
+                List<Player> highPairPlayerList = getHighCardPlayers(pairList);
+                if (highPairPlayerList.Count > 1)
+                {
+                    pairList.Clear();
+                    foreach (Player player in highPairPlayerList)
+                    {
+                        //if there are more than one player has the same pairs, compair the left cards
+                        player.setPlayerCards(playerPairCardsList[player]);
+                        pairList.Add(player);
+                    }
+                }
                 //get the high card players within the pair players
                 return getHighCardPlayers(pairList);
             }
