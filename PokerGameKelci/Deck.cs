@@ -38,11 +38,11 @@ namespace PokerGameKelci
                 cards.Add(card);
             }
             //black kind
-            Card blackKing = new Card(Constants.CARD_TYPE_BLACK_KING, 15);
-            cards.Add(blackKing);
+            //Card blackKing = new Card(Constants.CARD_TYPE_BLACK_KING, 15);
+            //cards.Add(blackKing);
             //red king
-            Card redKing = new Card(Constants.CARD_TYPE_RED_KING, 16);
-            cards.Add(redKing);
+            //Card redKing = new Card(Constants.CARD_TYPE_RED_KING, 16);
+            //cards.Add(redKing);
         }
 
         public void transferToDealer(List<Card> cardDealer)
