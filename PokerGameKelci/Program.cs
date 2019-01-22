@@ -34,7 +34,7 @@ namespace PokerGameKelci
             for (int i = 0; i < winners.Count; i++)
             {
                 winnersName = winnersName + " " + winners.Keys.ElementAt(i).getPlayerName(winners.Keys.ElementAt(i)) + " (" + getCard_code_desc(winners.Values.ElementAt(i)) + ")";
-
+                Console.WriteLine("The winners name is: " + winners.Keys.ElementAt(i).getPlayerName(winners.Keys.ElementAt(i)));
             }
 
             //Print cards for each player
@@ -70,10 +70,8 @@ namespace PokerGameKelci
                 case 4:
                     return Constants.STR_THREE_ONE_KIND;
                 case 3:
-                    return Constants.STR_TWO_PAIRS;
+                    return Constants.STR_PAIRS;
                 case 2:
-                    return Constants.STR_ONE_PAIR;
-                case 1:
                     return Constants.STR_HIGH_CARD;
                 default:
                     return "";

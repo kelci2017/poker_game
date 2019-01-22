@@ -35,11 +35,9 @@ namespace PokerGameKelci
         public static String STR_STRAIGHT = "straight";
         public static int THREE_ONE_KIND = 4;
         public static String STR_THREE_ONE_KIND = "three of a kind";
-        public static int TWO_PAIRS = 3;
-        public static String STR_TWO_PAIRS = "two pairs";
-        public static int ONE_PAIRS = 2;
-        public static String STR_ONE_PAIR = "one pair";
-        public static int HIGH_CARD = 1;
+        public static int PAIRS = 3;
+        public static String STR_PAIRS = "pairs";
+        public static int HIGH_CARD = 2;
         public static String STR_HIGH_CARD = "high card";
     }
 }
