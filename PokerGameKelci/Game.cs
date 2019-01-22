@@ -9,9 +9,6 @@ namespace PokerGameKelci
         //card amount per player for this round
         private int cardCount = -1;
 
-        private int ARRANGE_BY_KIND = 0;
-        private int ARRANGE_BY_NUM = 1;
-
         private List<Player> players = new List<Player>();
 
         public Game() { }

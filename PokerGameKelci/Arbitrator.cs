@@ -57,7 +57,6 @@ namespace PokerGameKelci
 
             List<Card> threeSameKindCards = new List<Card>();
             threeSameKindCards = getSameKind(cards, THREE_OF_ONE_KIND);
-            Console.WriteLine("the threesamekindcards count is: " + threeSameKindCards.Count);
             if (threeSameKindCards.Count > 0 && (threeSameKindCards[3].getNumber() == threeSameKindCards[4].getNumber()))
             {
                 player.setPlayerCards(threeSameKindCards);
@@ -131,13 +130,6 @@ namespace PokerGameKelci
                 arrangedCards.AddRange(leftCards);
             }
 
-            //foreach (Card card in arrangedCards)
-            //{
-            //    Console.WriteLine("the arranged cards after getpaircards is: " + card.getCard_type_desc() + ":" + card.getNumber() + "   ");
-            //}
-            //Console.WriteLine("the paircards count is: " + pairCards.Count);
-            //Console.WriteLine("the leftcards count is: " + leftCards.Count);
-
             return arrangedCards;
         }
         /**
@@ -191,7 +183,6 @@ namespace PokerGameKelci
                             sameKindCards.Add(cards.ElementAt(i + j));
                         }
                     cardIndex = i;
-                    Console.WriteLine("the same kind index i is: " + cardIndex);
                     break;
                     
                     } 
@@ -216,12 +207,7 @@ namespace PokerGameKelci
             //rankCards(leftCards);
             arrangedCards.AddRange(sameKindCards);
             arrangedCards.AddRange(leftCards);
-            foreach (Card card in arrangedCards)
-            {
-                Console.WriteLine("the arrangedCards after getsamekind is: " + card.getCard_type_desc() + ":" + card.getNumber() + "   ");
-            }
-            Console.WriteLine("the sameKindCards count is: " + sameKindCards.Count);
-            Console.WriteLine("the leftCards count is: " + leftCards.Count);
+
             return arrangedCards;
         }
 
@@ -248,10 +234,9 @@ namespace PokerGameKelci
             foreach (Player player in players)
             {                
                 playerCodeDic[player] = getCardsCode(player, player.getPlayerCards());
-                Console.WriteLine(player.getPlayerName(player) + " " + playerCodeDic[player]);
             }
             //get the max player code
-            winnerCodeDic = getMax(playerCodeDic);
+            winnerCodeDic = getMaxPlayerCodeDic(playerCodeDic);
 
             switch (playerCodeDic.Values.Max())
             {
@@ -270,7 +255,6 @@ namespace PokerGameKelci
                 case 4:  //three of a kind
                     return getHighCardFromLeft(winnerCodeDic, THREE_OF_ONE_KIND);
                 case 3:  // pairs
-                    Console.WriteLine("it has pairs");
                     return getHighCardFromLeft(winnerCodeDic, PAIRS);
                 case 2:  // high card
                     return getHighCardFromLeft(winnerCodeDic, HIGH_CARD);
@@ -279,10 +263,10 @@ namespace PokerGameKelci
             return winnerCodeDic;
         }
         /**
-         * get the max player code
+         * get the max player code dictionary
          * @param player code dictionary
          */
-        private Dictionary<Player, int> getMax (Dictionary<Player, int> playerCodeDic)
+        private Dictionary<Player, int> getMaxPlayerCodeDic (Dictionary<Player, int> playerCodeDic)
         {
             Dictionary<Player, int> scannedCodeDic = new Dictionary<Player, int>();
 
@@ -322,7 +306,6 @@ namespace PokerGameKelci
                     scannedCodeDic[playerCodeDic.Keys.ElementAt(i)] = playerCodeDic.Values.ElementAt(i);
                 }
             }
-            Console.WriteLine("the scanned dic count is: " + scannedCodeDic.Count);
             return scannedCodeDic;
         }
         /**
@@ -385,7 +368,6 @@ namespace PokerGameKelci
 
             if (indexZeroCodeDic.Count > 1)
             {
-                Console.WriteLine("now the fist element at index 0 is the same");
                 if (kinds == FOUR_OF_ONE_KIND)
                 {
                     return getHighCard(indexZeroCodeDic, 4);
@@ -410,10 +392,7 @@ namespace PokerGameKelci
                         List<Card> pairCards = new List<Card>();
                         pairCards = getPairCards(indexZeroCodeDic.Keys.ElementAt(i).getPlayerCards());
                         indexZeroCodeDic.Keys.ElementAt(i).setPlayerCards(pairCards);
-                        foreach (Card card in indexZeroCodeDic.Keys.ElementAt(i).getPlayerCards())
-                        {
-                            Console.WriteLine("the pair cards after get pair cards are : " + card.getCard_type_desc() + ":" + card.getNumber() + "   ");
-                        }
+
                         if (pairCards[2].getNumber() == pairCards[3].getNumber())
                         {
                             twoPairCodeDic[indexZeroCodeDic.Keys.ElementAt(i)] = indexZeroCodeDic.Values.ElementAt(i);
@@ -434,9 +413,8 @@ namespace PokerGameKelci
                 } else if (kinds == HIGH_CARD)
                 {
                     Dictionary<Player, int> indexOneCodeDic = new Dictionary<Player, int>();
-                    Console.WriteLine("now the first element at index 0 count is " + indexZeroCodeDic.Count);
                     indexOneCodeDic = getHighCard(indexZeroCodeDic, 1);
-                    Console.WriteLine("now the second element at index 1 count is " + indexOneCodeDic.Count);
+
                     if (indexOneCodeDic.Count > 1)
                     {
                         Dictionary<Player, int> indexTwoCodeDic = new Dictionary<Player, int>();

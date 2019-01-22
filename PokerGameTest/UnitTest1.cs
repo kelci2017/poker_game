@@ -58,15 +58,6 @@ namespace PokerGameTest
             //output the winner
             Dictionary<Player, int> winners = game.outputWinnerList(players);
 
-            //Print cards for each player
-            if (players != null)
-            {
-                foreach (Player player in players)
-                {
-                    player.printMyCards();
-                }
-            }
-
             Console.WriteLine("the winner from calculation is: " + winners.Keys.ElementAt(0).getPlayerName(winners.Keys.ElementAt(0)));
             Assert.AreEqual(winners.Keys.ElementAt(0).getPlayerName(winners.Keys.ElementAt(0)), game.getPlayer(2).getPlayerName(game.getPlayer(2)));
         }
